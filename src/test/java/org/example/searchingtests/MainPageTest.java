@@ -19,7 +19,7 @@ public class MainPageTest {
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.get("https://www.google.com/");
+        driver.get("https://www.bing.com/");
 
     }
 
@@ -30,14 +30,12 @@ public class MainPageTest {
 
     @Test
     public void search() {
+        String input = "Selenium";
+        WebElement searchField = driver.findElement(By.cssSelector("[aria-label='Enter your search term']"));
+        searchField.sendKeys(input);
+        searchField.submit();
 
-        WebElement searchField = driver.findElement(By.cssSelector("[data-test='search-input']"));
-        searchField.sendKeys("Selenium");
-
-        WebElement submitButton = driver.findElement(By.cssSelector("button[data-test='full-search-button']"));
-        submitButton.click();
-
-        WebElement searchPageField = driver.findElement(By.cssSelector("input[data-test='search-input']"));
-        assertEquals("Selenium", searchPageField.getAttribute("value"));
+        WebElement searchPageField = driver.findElement(By.cssSelector("#sb_form_q"));
+        assertEquals(input, searchPageField.getAttribute("value"));
     }
 }
